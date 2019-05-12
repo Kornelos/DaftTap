@@ -13,7 +13,7 @@ class MenuViewController: UIViewController {
     
     let topLabel: UILabel = {
         let title  = UILabel(frame: .zero)
-        title.text = "DaftTap Challange"
+        title.text = "DaftTap Challenge"
         title.textAlignment = .center
         title.font = UIFont(name: "Helvetica", size: 36)
         title.translatesAutoresizingMaskIntoConstraints = false
@@ -80,7 +80,7 @@ class MenuViewController: UIViewController {
         let vc = PlayViewController()
         self.present(vc, animated: true, completion: nil)
     }
-    //loading data from userdefaults
+    //loading data from user defaults
     func loadTopResults(){
         if let fetchedData = UserDefaults.standard.data(forKey: "topResults"){
             topResults = try! PropertyListDecoder().decode([GameResultModel].self, from: fetchedData)
