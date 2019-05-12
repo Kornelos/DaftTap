@@ -10,7 +10,7 @@ import UIKit
 
 class PlayViewController: UIViewController {
     
-    var countdown = 4 //change to 4
+    var countdown = 4
     var gameTime = 5
     var label = UILabel()
     var isPlayable: Bool = false
@@ -18,7 +18,7 @@ class PlayViewController: UIViewController {
     let shapeLayer = CAShapeLayer()
     let defaults = UserDefaults.standard
     var topResults = [GameResultModel]()
-    let emojis = ["🔥","😂","😎","👍","🙀","👏","👏","👌","🔥","🌈","⚡️"]
+    let emojis = ["🔥","😂","😎","👍","🙀","👏","😮","👌","🔥","🌈","⚡️"]
     var startTime: String = ""
     
     override func viewDidLoad() {
@@ -71,7 +71,7 @@ class PlayViewController: UIViewController {
     @objc func startCountdown() {
         if countdown > 0 {
             if(countdown - 1 == 0){
-                label.text = "Start!"
+                label.text = "Tap!"
                 isPlayable = true
                 startTime = getTime()
                 var _ = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(gameTimer), userInfo: nil, repeats: true)
@@ -101,6 +101,7 @@ class PlayViewController: UIViewController {
                 isPlayable = false
                 label.text = "👌🏻\(score)👌🏻"
                 addToTop(result: score, time: startTime)
+                finalAlert()
             }
             gameTime -= 1
         }
@@ -148,6 +149,20 @@ class PlayViewController: UIViewController {
             })
         })
     }
+    func finalAlert(){
+        var finalMessage: String = "You scored \(score) taps. 🔥"
+        if isTop(){
+            finalMessage += "This places you on High score board!👏"
+        }
+        let alertController = UIAlertController(title: "Game finished!", message: finalMessage, preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: "Back to menu.", style: .default) { (action:UIAlertAction) in
+            self.dismiss(animated: true, completion: nil)
+        }
+        alertController.addAction(action)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    //MARK: adding data to collection view top list.
     func loadTopResults(){
         if let fetchedData = defaults.data(forKey: "topResults"){
          topResults = try! PropertyListDecoder().decode([GameResultModel].self, from: fetchedData)
@@ -159,13 +174,23 @@ class PlayViewController: UIViewController {
     func addToTop(result: Int, time: String){
         let result = GameResultModel(with: result, time: time)
         topResults.append(result)
-        topResults.sort(by: {return $0.result > $1.result})
+        topResults.sort(by: {return $0.taps > $1.taps})
         if topResults.count > 5{
             topResults = topResults.dropLast()
         }
         let resultsData = try! PropertyListEncoder().encode(topResults)
         defaults.set(resultsData,forKey: "topResults")
         }
-    
+    func isTop()->Bool{
+        if topResults.isEmpty == true {
+            return true
+        }
+        for result in topResults{
+            if result.taps < score{
+                return true
+            }
+        }
+        return false
+    }
     
 }

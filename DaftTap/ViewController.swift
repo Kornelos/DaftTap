@@ -48,10 +48,14 @@ class ViewController: UIViewController {
         collectionView.dataSource = self
         setupConstraints()
        // defaults.removeObject(forKey: "topResults")
-        loadTopResults()
+       // loadTopResults()
       
         
         view.backgroundColor = .white
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        loadTopResults()
+        collectionView.reloadData()
     }
     private func setupConstraints(){
         let screenHeight = view.bounds.size.height
@@ -108,8 +112,7 @@ extension ViewController: UICollectionViewDataSource{
             .dequeueReusableCell(withReuseIdentifier: "MyCell", for: indexPath) as! CollectionViewCell
         //cell.backgroundColor = .black
         // Configure the cell
-        cell.scoreLabel.text = "\(indexPath.row+1).Score: \(topResults[indexPath.row].result)"
-        cell.timeLabel.text = topResults[indexPath.row].time
+        cell.scoreLabel.text = "\(indexPath.row+1)) Score: \(topResults[indexPath.row].taps) played: \(topResults[indexPath.row].time)"
         return cell
     }
     

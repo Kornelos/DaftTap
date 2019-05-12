@@ -9,10 +9,10 @@
 import Foundation
 
 struct GameResultModel: Codable{
-    let result: Int
+    let taps: Int
     let time: String
     init(with result: Int,time: String) {
-        self.result = result
+        self.taps = result
         self.time = time
     }
     
