@@ -19,7 +19,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="300" height="60"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="1. Score: 300" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qxI-oz-9wn">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="1) Score: 300" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qxI-oz-9wn">
                         <rect key="frame" x="20" y="11" width="104" height="39"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="104" id="D1D-bT-lso"/>
@@ -28,8 +28,8 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Time:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m9s-OI-eP2">
-                        <rect key="frame" x="127" y="11" width="112" height="39"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Time:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="m9s-OI-eP2">
+                        <rect key="frame" x="127" y="11" width="153" height="39"/>
                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -41,7 +41,7 @@
                 <constraint firstItem="qxI-oz-9wn" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="11" id="6sg-76-C0q"/>
                 <constraint firstItem="qxI-oz-9wn" firstAttribute="firstBaseline" secondItem="m9s-OI-eP2" secondAttribute="firstBaseline" id="8Xd-tP-J80"/>
                 <constraint firstItem="qxI-oz-9wn" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="20" id="Shn-jg-Luq"/>
-                <constraint firstAttribute="trailing" secondItem="m9s-OI-eP2" secondAttribute="trailing" constant="61" id="Wbv-EC-R6x"/>
+                <constraint firstAttribute="trailing" secondItem="m9s-OI-eP2" secondAttribute="trailing" constant="20" id="Wbv-EC-R6x"/>
                 <constraint firstItem="qxI-oz-9wn" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="Xaa-qi-KlZ"/>
                 <constraint firstItem="qxI-oz-9wn" firstAttribute="baseline" secondItem="m9s-OI-eP2" secondAttribute="baseline" id="rWJ-PD-8Fk"/>
                 <constraint firstItem="m9s-OI-eP2" firstAttribute="leading" secondItem="qxI-oz-9wn" secondAttribute="trailing" constant="3" id="yF1-i7-zIN"/>

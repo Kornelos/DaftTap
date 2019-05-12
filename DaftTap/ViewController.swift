@@ -9,7 +9,7 @@
 import UIKit
 
 class ViewController: UIViewController {
-    var topResults: [(String,String)] = []
+    var topResults = [GameResultModel]()
     let defaults = UserDefaults.standard
     
     let topLabel: UILabel = {
@@ -25,7 +25,7 @@ class ViewController: UIViewController {
         button.titleLabel?.font = UIFont.init(name: "Helvetica", size: 30)
         button.setTitleColor(.black, for: .normal)
         button.setTitle("PLAY", for: .normal)
-        button.layer.cornerRadius = 40
+        button.layer.cornerRadius = 20
         button.layer.borderWidth = 1.0
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(playClicked), for: .touchUpInside)
@@ -47,12 +47,15 @@ class ViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         setupConstraints()
+       // defaults.removeObject(forKey: "topResults")
         loadTopResults()
+      
         
         view.backgroundColor = .white
     }
     private func setupConstraints(){
         let screenHeight = view.bounds.size.height
+        let screenWidth = view.bounds.size.width
         //title
         view.addSubview(topLabel)
         topLabel.topAnchor.constraint(equalTo: self.view.topAnchor, constant:  screenHeight/9).isActive = true
@@ -62,8 +65,8 @@ class ViewController: UIViewController {
         //button
         view.addSubview(playButton)
         playButton.topAnchor.constraint(equalTo: topLabel.bottomAnchor, constant: screenHeight/9).isActive = true
-        playButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-        playButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+        playButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: screenWidth/6).isActive = true
+        playButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -screenWidth/6).isActive = true
         playButton.heightAnchor.constraint(equalToConstant:  screenHeight/9).isActive = true
         //collection
         view.addSubview(collectionView)
@@ -79,12 +82,17 @@ class ViewController: UIViewController {
         let vc = PlayViewController()
         self.present(vc, animated: true, completion: nil)
     }
+    
     func loadTopResults(){
-        let top = defaults.object(forKey: "topResults") as? [String:String] ?? [String:String]()
-        topResults = top.map({return ($0.key,$0.value)} )
-        
+        if let fetchedData = defaults.data(forKey: "topResults"){
+            topResults = try! PropertyListDecoder().decode([GameResultModel].self, from: fetchedData)
+        } else{
+            topResults = [GameResultModel]()
+        }
+        print(topResults)
     }
 }
+//Collection View extensions
 extension ViewController: UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
@@ -100,8 +108,8 @@ extension ViewController: UICollectionViewDataSource{
             .dequeueReusableCell(withReuseIdentifier: "MyCell", for: indexPath) as! CollectionViewCell
         //cell.backgroundColor = .black
         // Configure the cell
-        cell.scoreLabel.text = "\(indexPath.row+1).Score: \(topResults[indexPath.row].0)"
-        cell.timeLabel.text = topResults[indexPath.row].1
+        cell.scoreLabel.text = "\(indexPath.row+1).Score: \(topResults[indexPath.row].result)"
+        cell.timeLabel.text = topResults[indexPath.row].time
         return cell
     }
     

@@ -17,7 +17,7 @@ class PlayViewController: UIViewController {
     var score: Int = 0
     let shapeLayer = CAShapeLayer()
     let defaults = UserDefaults.standard
-    var topResults: [String:String] = [:]
+    var topResults = [GameResultModel]()
     let emojis = ["🔥","😂","😎","👍","🙀","👏","👏","👌","🔥","🌈","⚡️"]
     var startTime: String = ""
     
@@ -30,7 +30,12 @@ class PlayViewController: UIViewController {
         var _ = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(startCountdown), userInfo: nil, repeats: true)
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         view.addGestureRecognizer(tap)
-        addToTop(result: 9, time: getTime())
+//        addToTop(result: 9, time: getTime())
+//        addToTop(result: 90, time: getTime())
+//        addToTop(result: 21, time: getTime())
+//        addToTop(result: 100, time: getTime())
+//        addToTop(result: 5, time: getTime())
+//        addToTop(result: 1, time: getTime())
         
         // Do any additional setup after loading the view.
     }
@@ -144,20 +149,23 @@ class PlayViewController: UIViewController {
         })
     }
     func loadTopResults(){
-        topResults = defaults.object(forKey: "topResults") as? [String:String] ?? [String:String]()
-    }
-    func addToTop(result: Int, time: String){
-        topResults[String(result)] = time
-        var sortedResults = topResults.sorted(by: {$0.0 < $1.0})
-        if topResults.count > 5{
-        sortedResults = sortedResults.dropLast()
+        if let fetchedData = defaults.data(forKey: "topResults"){
+         topResults = try! PropertyListDecoder().decode([GameResultModel].self, from: fetchedData)
+        } else{
+            topResults = [GameResultModel]()
         }
-        topResults = [String:String]()
-        for (key,value) in sortedResults{
-            topResults[key] = value
-        }
-        defaults.set(topResults, forKey:  "topResults")
         print(topResults)
     }
+    func addToTop(result: Int, time: String){
+        let result = GameResultModel(with: result, time: time)
+        topResults.append(result)
+        topResults.sort(by: {return $0.result > $1.result})
+        if topResults.count > 5{
+            topResults = topResults.dropLast()
+        }
+        let resultsData = try! PropertyListEncoder().encode(topResults)
+        defaults.set(resultsData,forKey: "topResults")
+        }
+    
     
 }
