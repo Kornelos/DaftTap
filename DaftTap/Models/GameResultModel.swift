@@ -2,7 +2,7 @@
 //  GameResultModel.swift
 //  DaftTap
 //
-//  Created by Mikołaj Hościło on 12/05/2019.
+//  Created by Kornel Skórka on 12/05/2019.
 //  Copyright © 2019 Kornel Skórka. All rights reserved.
 //
 

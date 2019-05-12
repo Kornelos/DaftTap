@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  30sec
 //
-//  Created by Mikołaj Hościło on 12/05/2019.
+//  Created by Kornel Skórka on 12/05/2019.
 //  Copyright © 2019 Kornel Skórka. All rights reserved.
 //
 
@@ -18,8 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
-        let viewController = ViewController()
-       // window?.rootViewController = UINavigationController(rootViewController: viewController)
+        let viewController = MenuViewController()
         window?.rootViewController = viewController
         return true
        

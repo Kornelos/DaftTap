@@ -2,7 +2,7 @@
 //  PlayViewController.swift
 //  DaftTap
 //
-//  Created by Mikołaj Hościło on 12/05/2019.
+//  Created by Kornel Skórka on 12/05/2019.
 //  Copyright © 2019 Kornel Skórka. All rights reserved.
 //
 
@@ -10,16 +10,10 @@ import UIKit
 
 class PlayViewController: UIViewController {
     
-    var countdown = 4
-    var gameTime = 5
     var label = UILabel()
-    var isPlayable: Bool = false
-    var score: Int = 0
     let shapeLayer = CAShapeLayer()
-    let defaults = UserDefaults.standard
     var topResults = [GameResultModel]()
-    let emojis = ["🔥","😂","😎","👍","🙀","👏","😮","👌","🔥","🌈","⚡️"]
-    var startTime: String = ""
+    var gameModel = GameModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,14 +24,6 @@ class PlayViewController: UIViewController {
         var _ = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(startCountdown), userInfo: nil, repeats: true)
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         view.addGestureRecognizer(tap)
-//        addToTop(result: 9, time: getTime())
-//        addToTop(result: 90, time: getTime())
-//        addToTop(result: 21, time: getTime())
-//        addToTop(result: 100, time: getTime())
-//        addToTop(result: 5, time: getTime())
-//        addToTop(result: 1, time: getTime())
-        
-        // Do any additional setup after loading the view.
     }
     //MARK: SetupUI
     func setupProgressBar(){
@@ -69,11 +55,11 @@ class PlayViewController: UIViewController {
     }
     //MARK: Timers
     @objc func startCountdown() {
-        if countdown > 0 {
-            if(countdown - 1 == 0){
+        if gameModel.countdown > 0 {
+            if(gameModel.countdown - 1 == 0){
                 label.text = "Tap!"
-                isPlayable = true
-                startTime = getTime()
+                gameModel.isPlayable = true
+                gameModel.startTime = getTime()
                 var _ = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(gameTimer), userInfo: nil, repeats: true)
                 let basicAnimation = CABasicAnimation(keyPath: "strokeEnd")
                 basicAnimation.toValue = 1
@@ -82,7 +68,7 @@ class PlayViewController: UIViewController {
                 basicAnimation.isRemovedOnCompletion = false
                 shapeLayer.add(basicAnimation, forKey: "urSoBasic")
             } else {
-                label.text = String(countdown-1)
+                label.text = String(gameModel.countdown-1)
                 label.alpha = 0
                 label.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
                 UIView.animate(withDuration: 0.2, animations: {
@@ -91,27 +77,27 @@ class PlayViewController: UIViewController {
                 })
                 
             }
-            countdown -= 1
+            gameModel.countdown -= 1
         }
     }
     
     @objc func gameTimer() {
-        if gameTime > 0 {
-            if(gameTime == 1){
-                isPlayable = false
-                label.text = "👌🏻\(score)👌🏻"
-                addToTop(result: score, time: startTime)
+        if gameModel.gameTime > 0 {
+            if(gameModel.gameTime == 1){
+               gameModel.isPlayable = false
+                label.text = "👌🏻\(gameModel.score)👌🏻"
+                addToTop(result: gameModel.score, time: gameModel.startTime)
                 finalAlert()
             }
-            gameTime -= 1
+            gameModel.gameTime -= 1
         }
     }
     
     @objc func handleTap(_ tap: UITapGestureRecognizer) {
-        if(isPlayable){
+        if(gameModel.isPlayable){
             spawnEmoji(at: tap.location(in: view))
-            score += 1
-            label.text = String(score)
+            gameModel.score += 1
+            label.text = String(gameModel.score)
             label.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
             UIView.animate(withDuration: 0.2, animations: {
                 self.label.transform = .identity
@@ -133,7 +119,7 @@ class PlayViewController: UIViewController {
         spawnedEmoji.font = UIFont(name: "Helvetica", size: 40)
         spawnedEmoji.center = location
         spawnedEmoji.backgroundColor = .clear
-        spawnedEmoji.text = emojis.randomElement()
+        spawnedEmoji.text = gameModel.emojis.randomElement()
         view.addSubview(spawnedEmoji)
         spawnedEmoji.alpha = 0
         spawnedEmoji.transform = CGAffineTransform(scaleX: 3, y: 3)
@@ -150,7 +136,7 @@ class PlayViewController: UIViewController {
         })
     }
     func finalAlert(){
-        var finalMessage: String = "You scored \(score) taps. 🔥"
+        var finalMessage: String = "You scored \(gameModel.score) taps. 🔥"
         if isTop(){
             finalMessage += "This places you on High score board!👏"
         }
@@ -164,12 +150,11 @@ class PlayViewController: UIViewController {
     }
     //MARK: adding data to collection view top list.
     func loadTopResults(){
-        if let fetchedData = defaults.data(forKey: "topResults"){
+        if let fetchedData = UserDefaults.standard.data(forKey: "topResults"){
          topResults = try! PropertyListDecoder().decode([GameResultModel].self, from: fetchedData)
         } else{
             topResults = [GameResultModel]()
         }
-        print(topResults)
     }
     func addToTop(result: Int, time: String){
         let result = GameResultModel(with: result, time: time)
@@ -179,14 +164,14 @@ class PlayViewController: UIViewController {
             topResults = topResults.dropLast()
         }
         let resultsData = try! PropertyListEncoder().encode(topResults)
-        defaults.set(resultsData,forKey: "topResults")
+        UserDefaults.standard.set(resultsData,forKey: "topResults")
         }
     func isTop()->Bool{
         if topResults.isEmpty == true {
             return true
         }
         for result in topResults{
-            if result.taps < score{
+            if result.taps < gameModel.score{
                 return true
             }
         }

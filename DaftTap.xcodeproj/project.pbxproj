@@ -11,6 +11,7 @@
 		4928061B22881B6100F9A14B /* CollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4928061922881B6100F9A14B /* CollectionViewCell.xib */; };
 		492806212288412900F9A14B /* PlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492806202288412900F9A14B /* PlayViewController.swift */; };
 		492806252288A90B00F9A14B /* GameResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492806242288A90B00F9A14B /* GameResultModel.swift */; };
+		4928062D2288B55800F9A14B /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4928062C2288B55800F9A14B /* GameModel.swift */; };
 		49B5C14522881454004070BE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B5C14422881454004070BE /* AppDelegate.swift */; };
 		49B5C14722881454004070BE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B5C14622881454004070BE /* ViewController.swift */; };
 		49B5C14C22881456004070BE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49B5C14B22881456004070BE /* Assets.xcassets */; };
@@ -21,6 +22,7 @@
 		4928061922881B6100F9A14B /* CollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CollectionViewCell.xib; sourceTree = "<group>"; };
 		492806202288412900F9A14B /* PlayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayViewController.swift; sourceTree = "<group>"; };
 		492806242288A90B00F9A14B /* GameResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameResultModel.swift; sourceTree = "<group>"; };
+		4928062C2288B55800F9A14B /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
 		49B5C14122881454004070BE /* DaftTap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DaftTap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		49B5C14422881454004070BE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		49B5C14622881454004070BE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -39,6 +41,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		492806282288B46400F9A14B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4928062B2288B47900F9A14B /* CollectionViewCell */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		492806292288B46900F9A14B /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				49B5C14622881454004070BE /* ViewController.swift */,
+				492806202288412900F9A14B /* PlayViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		4928062A2288B47100F9A14B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				492806242288A90B00F9A14B /* GameResultModel.swift */,
+				4928062C2288B55800F9A14B /* GameModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		4928062B2288B47900F9A14B /* CollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				4928061922881B6100F9A14B /* CollectionViewCell.xib */,
+				4928061822881B6100F9A14B /* CollectionViewCell.swift */,
+			);
+			path = CollectionViewCell;
+			sourceTree = "<group>";
+		};
 		49B5C13822881453004070BE = {
 			isa = PBXGroup;
 			children = (
@@ -59,11 +96,9 @@
 			isa = PBXGroup;
 			children = (
 				49B5C14422881454004070BE /* AppDelegate.swift */,
-				49B5C14622881454004070BE /* ViewController.swift */,
-				4928061822881B6100F9A14B /* CollectionViewCell.swift */,
-				4928061922881B6100F9A14B /* CollectionViewCell.xib */,
-				492806202288412900F9A14B /* PlayViewController.swift */,
-				492806242288A90B00F9A14B /* GameResultModel.swift */,
+				492806292288B46900F9A14B /* ViewControllers */,
+				492806282288B46400F9A14B /* Views */,
+				4928062A2288B47100F9A14B /* Models */,
 				49B5C14B22881456004070BE /* Assets.xcassets */,
 				49B5C15022881456004070BE /* Info.plist */,
 			);
@@ -145,6 +180,7 @@
 				49B5C14522881454004070BE /* AppDelegate.swift in Sources */,
 				4928061A22881B6100F9A14B /* CollectionViewCell.swift in Sources */,
 				492806252288A90B00F9A14B /* GameResultModel.swift in Sources */,
+				4928062D2288B55800F9A14B /* GameModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

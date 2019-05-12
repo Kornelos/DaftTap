@@ -1,20 +1,19 @@
 //
-//  ViewController.swift
+//  MenuViewController.swift
 //  30sec
 //
-//  Created by Mikołaj Hościło on 12/05/2019.
+//  Created by Kornel Skórka on 12/05/2019.
 //  Copyright © 2019 Kornel Skórka. All rights reserved.
 //
 
 import UIKit
 
-class ViewController: UIViewController {
+class MenuViewController: UIViewController {
     var topResults = [GameResultModel]()
-    let defaults = UserDefaults.standard
     
     let topLabel: UILabel = {
         let title  = UILabel(frame: .zero)
-        title.text = "Daft Tap Challange"
+        title.text = "DaftTap Challange"
         title.textAlignment = .center
         title.font = UIFont(name: "Helvetica", size: 36)
         title.translatesAutoresizingMaskIntoConstraints = false
@@ -47,10 +46,6 @@ class ViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         setupConstraints()
-       // defaults.removeObject(forKey: "topResults")
-       // loadTopResults()
-      
-        
         view.backgroundColor = .white
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -79,30 +74,23 @@ class ViewController: UIViewController {
         collectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
         collectionView.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
     }
-    
+
     @objc func playClicked(sender: UIButton!)
     {
-        print("Click")
         let vc = PlayViewController()
         self.present(vc, animated: true, completion: nil)
     }
-    
+    //loading data from userdefaults
     func loadTopResults(){
-        if let fetchedData = defaults.data(forKey: "topResults"){
+        if let fetchedData = UserDefaults.standard.data(forKey: "topResults"){
             topResults = try! PropertyListDecoder().decode([GameResultModel].self, from: fetchedData)
         } else{
             topResults = [GameResultModel]()
         }
-        print(topResults)
     }
 }
 //Collection View extensions
-extension ViewController: UICollectionViewDelegate{
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-    }
-}
-extension ViewController: UICollectionViewDataSource{
+extension MenuViewController: UICollectionViewDataSource, UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return topResults.count
     }
@@ -110,8 +98,6 @@ extension ViewController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView
             .dequeueReusableCell(withReuseIdentifier: "MyCell", for: indexPath) as! CollectionViewCell
-        //cell.backgroundColor = .black
-        // Configure the cell
         cell.scoreLabel.text = "\(indexPath.row+1)) Score: \(topResults[indexPath.row].taps) played: \(topResults[indexPath.row].time)"
         return cell
     }
